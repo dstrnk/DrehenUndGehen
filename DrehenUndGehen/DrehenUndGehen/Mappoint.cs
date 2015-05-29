@@ -27,7 +27,7 @@ namespace DrehenUndGehen
 			right = false;
 			size = new Size(10, 10);
 			looks = null;
-			files = null;
+			files = new FileManager();
 			
 		}
 		public Mappoint(Bitmap looks,Size size, bool top = false, bool bottom= false, bool left = false, bool right = false)
@@ -38,6 +38,7 @@ namespace DrehenUndGehen
 			this.right = right;
 			this.size = size;
 			this.looks = looks;
+            files = new FileManager();
 
 		}
 		public void switchPosition()
@@ -76,7 +77,7 @@ namespace DrehenUndGehen
 			{
 				top = false;
 				left = true;
-				looks = files.rightbottomleft;
+			    looks = files.rightbottomleft;
 			}
 			else if ((right == true && bottom == true && left == true)&&( top == false))
 			{
@@ -109,10 +110,6 @@ namespace DrehenUndGehen
 			}
 
 		}
-		/*public void showlooks(Mappoint mappi,Graphics g)
-		{
-			g.DrawImage(mappi.looks,0,0);
-		}*/
-		
+	
 	}
 }

@@ -6,3 +6,11 @@ C:\Users\Shining\Desktop\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGe
 C:\Users\Shining\Desktop\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.csproj.GenerateResource.Cache
 C:\Users\Shining\Desktop\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.exe
 C:\Users\Shining\Desktop\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.pdb
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.exe
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.pdb
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\bin\Debug\DrehenUndGehen.exe
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\bin\Debug\DrehenUndGehen.pdb
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.csprojResolveAssemblyReference.cache
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.Form1.resources
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.Properties.Resources.resources
+D:\Projekte\DrehenUndGehen\DrehenUndGehen\obj\x86\Debug\DrehenUndGehen.csproj.GenerateResource.Cache

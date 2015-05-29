@@ -11,7 +11,7 @@ namespace DrehenUndGehen
 {
     public partial class Form1 : Form
     {
-        Graphics g;
+        Graphics g, f;
         Map first;
         Renderer rend;
         Mappoint point;
@@ -25,8 +25,9 @@ namespace DrehenUndGehen
             this.Height = 5 * 50 + 500;
             g = this.CreateGraphics();
             rend = new Renderer(first, g);
-            point = new Mappoint(first.files.lefttopright, new Size(100, 100));
-            pictureBox1.BackgroundImage = point.looks;
+            point = new Mappoint(first.files.lefttopright, new Size(500, 500),true,false,true,true);
+           
+            f = pictureBox1.CreateGraphics();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -63,8 +64,14 @@ namespace DrehenUndGehen
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+
+            Refresh();
+           
+            Rectangle rec = new Rectangle(0,0,pictureBox1.Width,pictureBox1.Height);
+            f.DrawImageUnscaledAndClipped(point.looks,rec);
             point.switchPosition();
-            pictureBox1.BackgroundImage = point.looks;
+            f.DrawImageUnscaledAndClipped(point.looks, rec);
+           
         }
 
 
