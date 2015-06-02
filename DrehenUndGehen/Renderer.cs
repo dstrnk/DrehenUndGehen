@@ -12,77 +12,68 @@ namespace DrehenUndGehen
 {
     class Renderer
     {
-        private Map first{get;set;}
+
+        /* 
+         * Der Renderer wird für die Zeichnung benutzt
+         * Wo wird welcher Mappoint gezeichnet und wo wird die exchangeCard plaziert.
+         */ 
+        public Map first{get;set;}
         Graphics g;
-        PictureBox s;
-        public List<RectangleF> listofMarks { get; set; }
+        
+        
 
 
         public Renderer()
         {
-            first   = new Map();
-            listofMarks = new List<RectangleF>();
+            first   = new Map();          
         }
-        public Renderer(Map map ,Graphics g,PictureBox s)
+        public Renderer(Map map ,Graphics g)
         {
-            first = map;
-            listofMarks = new List<RectangleF>();
-            this.g = g;
-            this.s = s;
+            this.first = map;           
+            this.g = g;          
         }
 
 
-        public void drawMap(int sizeOfMapPoints,Form1 form)
+        public void drawMap(Form1 form)
         {
-            
-            
+			int x = first.MapPointSize;
+
             for (int i = 0; i < first.Mapsize; i++)
             {
                 for (int j = 0; j < first.Mapsize; j++)
-                {
-                    int x = first.Board[i, j].size;
-                    
+                {                  
                     if(i==0 && j%2 !=0)
                     {
-                        /*
-                         * ####Wird eventuell für Drag&Drop benötigt#####
-                         * 
-                         * PictureBox pic = new PictureBox();
-                        
-                        pic.Location = new Point(550 + j * x, 150 + i * x-sizeOfMapPoints);
-                        pic.Size = new Size(sizeOfMapPoints, sizeOfMapPoints);
-                        pic.BackgroundImageLayout = ImageLayout.Stretch;
-                        pic.BackgroundImage = first.files.arrowdown;                        
-                        pic.Visible = true;
-                        
-                        form.Controls.Add(pic);   */
-
-                        listofMarks.Add(new RectangleF(550 + j * x, 150 + i * x, x, x)); 
-                        g.DrawImage(first.files.arrowdown, 550 + j * x, 150 + i * x - sizeOfMapPoints, x, x);
+                       
+                        g.DrawImage(first.files.arrowdown, first.MappositionX + j * x, first.MappositionY + i * x- x, x, x);
                     }
-                    if(j==0 && i%2!=0)
+                    if(j==0 && i%2 != 0)
                     {
-                        listofMarks.Add(new RectangleF(550 + j * x, 150 + i * x, x, x));
-                        g.DrawImage(first.files.arrowright, 550 + j * x - sizeOfMapPoints, 150 + i * x, x, x);
+                       
+                        g.DrawImage(first.files.arrowright, first.MappositionX + j * x - x, first.MappositionY + i * x, x, x);
                     }
                     if (i == first.Mapsize-1 && j % 2 != 0)
                     {
-                        listofMarks.Add(new RectangleF(550 + j * x, 150 + i * x , x, x));
-                        g.DrawImage(first.files.arrowup, 550 + j * x, 150 + i * x + sizeOfMapPoints, x, x);
+                      
+                        g.DrawImage(first.files.arrowup, first.MappositionX + j * x, first.MappositionY + i * x + x, x, x);
                     }
                     if( j == first.Mapsize-1 && i %2 !=0)
                     {
-                        listofMarks.Add(new RectangleF(550 + j * x , 150 + i * x, x, x));
-                        g.DrawImage(first.files.arrowleft, 550 + j * x + sizeOfMapPoints, 150 + i * x, x, x);
+                      
+                        g.DrawImage(first.files.arrowleft, first.MappositionX + j * x + x, first.MappositionY + i * x, x, x);
                     }
-                        //g.DrawImage(first.Board[i, j].looks, 550 + j * x, 150 + i * x, x, x);
-                    g.DrawImage(first.Board[i, j].looks, first.Board[i,j].paintPosition);
-                    
+
+                    g.DrawImage(first.Board[i, j].looks,first.MappositionX+x*j,first.MappositionY+x*i,x,x);
+					
                 }
             }
-            s.BackgroundImageLayout = ImageLayout.Stretch;
-            s.BackgroundImage = first.exchangeCard.looks;
+           
             
         }
+		public void drawExchangeCard(int x , int y)
+		{
+			g.DrawImage(first.exchangeCard.looks,x,y, first.MapPointSize, first.MapPointSize);
+		}
+	
     }
 }

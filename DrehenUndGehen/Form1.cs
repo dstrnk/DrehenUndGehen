@@ -9,86 +9,142 @@ using System.Windows.Forms;
 
 namespace DrehenUndGehen
 {
-    public partial class Form1 : Form
-    {
-        
-        Graphics g; 
-        Map first;
-        Renderer rend;
-        private bool _moving;
-        private Point _startLocation;
+	public partial class Form1 : Form
+	{
+		Graphics g;
+		Map first;
+		Renderer rend;
+		bool moving;
+		Point p, s;
 
-        public Form1()
-        {
-            InitializeComponent();
-            first = new Map(9,550,150);
-            first.fillMap(75);           
-            WindowState = FormWindowState.Maximized;
-            g = this.CreateGraphics();
-            rend = new Renderer(first, g,pictureBox1);
-          
-        }
+		public Form1()
+		{
+			InitializeComponent();
+			first = new Map(9,75,550,150);
+			first.fillMap();
+			WindowState = FormWindowState.Maximized;			            //Fenster wird auto Maximiert
+			this.DoubleBuffered = true;                                     //Reduziert flimmern hierdurch kann allerdings nur im on_paint event gezeichnet werden    
+            this.AllowDrop = true;                                          //für Drag and Drop bin mir aber nicht sicher ob es Programmintern überhaupt gebraucht wird
+			p = new Point(50, 50);                              
+			s = new Point(50, 50);
+		}
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
+		private void Form1_Load(object sender, EventArgs e)
+		{
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-            rend.drawMap(75,this);
-        }
+		}
 
-        private void Form1_Shown(object sender, EventArgs e)
-        {
-            
-          
-        }
+		public void Form1_Paint(object sender, PaintEventArgs e)
+		{			
+			g = e.Graphics;
+			rend = new Renderer(first, g);
+			rend.drawMap(this);
+			rend.drawExchangeCard(p.X, p.Y);			
+		}
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            //first.exchangeCard.switchPosition();
-            //pictureBox1.BackgroundImage = first.exchangeCard.looks;
-            
-        }
+		private void Form1_Shown(object sender, EventArgs e)
+		{
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            _moving = true;
-            _startLocation = e.Location;
-        }
 
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            _moving = false;
-           
-                    
-        }
+		}
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_moving)
+
+		public void Form1_MouseDown(object sender, MouseEventArgs e)
+		{
+			if(e.Button==MouseButtons.Left&&new RectangleF(p.X,p.Y,first.MapPointSize,first.MapPointSize).Contains(e.Location))         // Überprüfung ob sich die Maus auf der exchangeCard Befindet
+			{
+				p.X = e.X-first.MapPointSize/2;                                                                                         // Falls ja wird die Maus in die Mitte der exchangeCard gesetzt
+				p.Y = e.Y - first.MapPointSize / 2;                                                                                     // und moving wird auf true gesetzt
+				moving = true;
+			}
+			
+
+
+
+		
+
+			
+		}
+
+		public void Form1_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (moving)                                                                                                                // wenn die Maus sich bewegt während moving true(also der Maus nicht losgelassen wurde) ist.
+			{
+				p.X = e.X-first.MapPointSize/2;                                                                                       // Wird die exchange card immer an die Position der Maus gezeichnet
+				p.Y = e.Y-first.MapPointSize/2;                                                                                         // Drag and Drop halt....
+			}
+			Refresh();
+			
+			
+			
+		}
+
+		private void Form1_MouseUp(object sender, MouseEventArgs e)
+		{
+
+            /*
+             * Hier wird überprüft ob die exchangeCard auf der richtigen Position abgelegt wurde(Rote Pfeile)
+             * falls ja wird die Reihe/Spalte entsprechend verschoben
+             */ 
+            if (moving)
             {
-                pictureBox1.Left += e.Location.X - _startLocation.X;
-                pictureBox1.Top += e.Location.Y - _startLocation.Y;
+                for (int i = 0; i < first.Mapsize; i++)
+                {
+                    if (i % 2 != 0)
+                    {
+                        if (new RectangleF(first.MappositionX - first.MapPointSize, first.MappositionY + first.MapPointSize * i, first.MapPointSize, first.MapPointSize).Contains(e.Location))
+                        {
+                            first.PushRow(i, first.exchangeCard);
+                            Refresh();
+                        }
+                        else if (new RectangleF(first.MappositionX + first.MapPointSize * i, first.MappositionY - first.MapPointSize, first.MapPointSize, first.MapPointSize).Contains(e.Location))
+                        {
+                            first.PushColumn(i, first.exchangeCard);
+                            Refresh();
+                        }
+                        else if (new RectangleF(first.MappositionX + first.MapPointSize * first.Mapsize, first.MappositionY + first.MapPointSize * i, first.MapPointSize, first.MapPointSize).Contains(e.Location))
+                        {
+                            first.PullRow(i, first.exchangeCard);
+                            Refresh();
+                        }
+                        else if (new RectangleF(first.MappositionX + first.MapPointSize * i, first.MappositionY + first.MapPointSize * first.Mapsize, first.MapPointSize, first.MapPointSize).Contains(e.Location))
+                        {
+                            first.PullColumn(i, first.exchangeCard);
+                            Refresh();
+                        }
+
+                    }
+                }
+            }
+            /*
+             * Hier wird moving auf false gesetzt weil wir die Maus loslassen denke das ist vernünftig xD
+             */ 
+			if (e.Button == MouseButtons.Left)
+			{
+				moving = false;
+				p.X = s.X;
+				p.Y = s.Y;
+			}
+
+
+			Refresh();
+		}
+
+
+        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // Mit Doppelklick die Position der exchange Card ändern
+            if (new Rectangle(p.X, p.Y, first.MapPointSize, first.MapPointSize).Contains(e.Location))
+            {
+                first.exchangeCard.switchPosition();
             }
         }
 
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-            foreach (var rectangle in rend.listofMarks)
-                if (rectangle.Contains(e.Location))
-                {
-                    MessageBox.Show("Hallo");
-                }
-                   
- 
-        }
-        
-      
 
-  
 
-    }
 
+
+	}
 }
+
+

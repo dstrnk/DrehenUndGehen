@@ -10,6 +10,12 @@ namespace DrehenUndGehen
 {
     public class FileManager
     {
+        /*
+         * 
+         * 
+         * Hier werden Alle Bitmaps geladen
+         * und falls nötig ein zufälliger ausgewählt
+         */ 
         public Bitmap topright { get; set; }
         public Bitmap rightbottom { get; set; }
         public Bitmap bottomleft { get; set; }
