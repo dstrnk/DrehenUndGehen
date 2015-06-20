@@ -22,7 +22,7 @@ namespace DrehenUndGehen
 		int column = -1;
 		int pixeloffset = 0;
 		Gamescreen screen;
-		
+        List<Point> paths;
 
 		public Form1()
 		{
@@ -36,6 +36,7 @@ namespace DrehenUndGehen
 			p = new Point(50, 50);                              
 			s = new Point(50, 50);
 			screen = new Gamescreen(first);
+            paths = new List<Point>();
 			
 		}
 
@@ -226,30 +227,91 @@ namespace DrehenUndGehen
 			Refresh();
 		}
 
+        public bool checkAlreadyInList(Point point, List<Point> paths) 
+        {
+            bool found = false;
+
+            for (int i = 0; i < paths.Count; i++)
+            {
+                if (paths[i] == point)
+                    found = true;
+            }
+
+            if (!found)
+                return false;
+
+            else
+                return true;
+        }
+
 		private void Form1_MouseClick(object sender, MouseEventArgs e)
-		{/*
+		{
 			checkBox1.Checked = false;
 			checkBox2.Checked = false;
 			checkBox3.Checked = false;
 			checkBox4.Checked = false;
 
-			if (first.Board[Convert.ToInt32((e.X - first.MappositionX) / first.MapPointSize), Convert.ToInt32((e.Y - first.MappositionY) / first.MapPointSize)].top == true)
+			if (first.Board[Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)].top == true)
 			{
 				checkBox1.Checked = true;
 			}
-			if (first.Board[Convert.ToInt32((e.X - first.MappositionX) / first.MapPointSize), Convert.ToInt32((e.Y - first.MappositionY) / first.MapPointSize)].right == true)
-			{
-				checkBox2.Checked = true;
-			}
-			if (first.Board[Convert.ToInt32((e.X - first.MappositionX) / first.MapPointSize), Convert.ToInt32((e.Y - first.MappositionY) / first.MapPointSize)].bottom == true)
+			if (first.Board[Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)].right == true)
 			{
 				checkBox3.Checked = true;
 			}
-			if (first.Board[Convert.ToInt32((e.X - first.MappositionX) / first.MapPointSize), Convert.ToInt32((e.Y - first.MappositionY) / first.MapPointSize)].left == true)
+			if (first.Board[Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)].bottom == true)
 			{
 				checkBox4.Checked = true;
 			}
-			*/
+			if (first.Board[Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)].left == true)
+			{
+				checkBox2.Checked = true;
+			}
+
+            pictureBox1.Image = first.Board[Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)].looks;
+
+
+
+            listBox1.Items.Clear();
+            paths = new List<Point>();
+
+            if ( paths.Count == 0)
+                paths.Add(new Point(Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)));
+
+            for (int i = 0; i < paths.Count; i++)
+            {
+                if (paths[i].Y != 0 && first.Board[paths[i].X, paths[i].Y].top && first.Board[paths[i].X, paths[i].Y - 1].bottom)
+                {
+                    if (!checkAlreadyInList(new Point(paths[i].X, paths[i].Y - 1), paths))
+                        paths.Add(new Point(paths[i].X, paths[i].Y - 1));
+                }
+
+                if (paths[i].Y != first.Mapsize - 1 && first.Board[paths[i].X, paths[i].Y].bottom && first.Board[paths[i].X, paths[i].Y + 1].top)
+                {
+                    if (!checkAlreadyInList(new Point(paths[i].X, paths[i].Y + 1), paths))
+                        paths.Add(new Point(paths[i].X, paths[i].Y + 1));
+                }
+
+                if (paths[i].X != 0 && first.Board[paths[i].X, paths[i].Y].left && first.Board[paths[i].X - 1, paths[i].Y].right)
+                {
+                    if (!checkAlreadyInList(new Point(paths[i].X -1 , paths[i].Y ), paths))
+                        paths.Add(new Point(paths[i].X - 1, paths[i].Y));
+                }
+
+                if (paths[i].X != first.Mapsize - 1 && first.Board[paths[i].X, paths[i].Y].right && first.Board[paths[i].X + 1, paths[i].Y].left)
+                {
+                    if (!checkAlreadyInList(new Point(paths[i].X + 1, paths[i].Y ), paths))
+                        paths.Add(new Point(paths[i].X + 1, paths[i].Y));
+                }
+            }
+            
+
+
+            for(int i=0; i<paths.Count; i++)
+            {
+                listBox1.Items.Add(paths[i].X + " , " + paths[i].Y);
+            }
+			
 		}
 
 	
