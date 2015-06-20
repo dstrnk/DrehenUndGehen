@@ -20,9 +20,13 @@ namespace DrehenUndGehen
 		public Mappoint[,] Board { get; set; }
 		public FileManager files { get; set; }
 		public Mappoint exchangeCard { get; set; }
-		public int MappositionX { get; set; }
-		public int MappositionY { get; set; }
+		public int SizeExchangeCard { get; set; }
+		public int SizeExchangeCardFrame { get; set; }
+		//public int MappositionX { get; set; }
+		//public int MappositionY { get; set; }
 		public int MapPointSize { get; set; }
+
+		public Gamescreen screen { get; set; }
 
 
         /*
@@ -35,22 +39,26 @@ namespace DrehenUndGehen
 			Mapsize = 0;
 			Board = new Mappoint[Mapsize, Mapsize];
 			files = new FileManager();
-			exchangeCard = new Mappoint(files.bottomlefttop, 75, true, true, true);
-			MappositionX = 0;
-			MappositionY = 0;
+			
+			exchangeCard = new Mappoint(files.bottomlefttop, true, true, true);
+			//MappositionX = 0;
+			//MappositionY = 0;
 
 		}
 
 
-		public Map(int Mapsize, int MapPointSize, int MappositionX, int MappositionY)
+		public Map(int Mapsize, int MapPointSize)
 		{
 			this.Mapsize = Mapsize;
 			Board = new Mappoint[Mapsize, Mapsize];
 			files = new FileManager();
-			this.MappositionX = MappositionX;
-			this.MappositionY = MappositionY;
+			this.screen = screen;
+			//this.MappositionX = MappositionX;
+			//this.MappositionY = MappositionY;
 			this.MapPointSize = MapPointSize;
-			exchangeCard = new Mappoint(files.randomBitmap(), MapPointSize);            //Ein Mappoint zum Verschieben wird beim ersten mal zufällig erstellt
+			exchangeCard = new Mappoint(files.randomBitmap());
+			this.SizeExchangeCard = Convert.ToInt32(MapPointSize - (MapPointSize * 0.25));
+			//Ein Mappoint zum Verschieben wird beim ersten mal zufällig erstellt
 
 		}
 
@@ -62,52 +70,52 @@ namespace DrehenUndGehen
          * zum Schluss wird die neue exchangeCard gesetzt.
          */ 
 
-		public void PushRow(int Row, Mappoint newMapPoint)
+		public void PushColumn(int Column, Mappoint newMapPoint)
 		{
-			Mappoint help = Board[Row, Mapsize - 1];
+			Mappoint help = Board[Column, Mapsize - 1];
 			for (int i = Mapsize - 1; i > 0; i--)
 			{
-				Board[Row, i] = Board[Row, i - 1];
+				Board[Column, i] = Board[Column, i - 1];
 			}			
-			Board[Row, 0] = newMapPoint;
+			Board[Column, 0] = newMapPoint;
 			this.exchangeCard = help;
 
 
 
 
 		}
-		public void PullRow(int Row, Mappoint newMapPoint)					// Row beginnt bei 0!!!
+		public void PullColumn(int Column, Mappoint newMapPoint)					// Row beginnt bei 0!!!
 		{
-			Mappoint help = Board[Row, 0];
+			Mappoint help = Board[Column, 0];
 			for (int i = 0; i < Mapsize - 1; i++)
 			{
-				Board[Row, i] = Board[Row, i + 1];
+				Board[Column, i] = Board[Column, i + 1];
 			}
-			Board[Row, Mapsize - 1] = newMapPoint;
+			Board[Column, Mapsize - 1] = newMapPoint;
 			this.exchangeCard = help;
 		}
 
-		public void PushColumn(int Column, Mappoint newMapPoint)				// Column beginnt bei 0!!!
+		public void PushRow(int Row, Mappoint newMapPoint)				// Column beginnt bei 0!!!
 		{
-			Mappoint help = Board[Mapsize - 1, Column];
+			Mappoint help = Board[Mapsize - 1, Row];
 
 			for (int i = Mapsize - 1; i > 0; i--)
 			{
-				Board[i, Column] = Board[i - 1, Column];
+				Board[i, Row] = Board[i - 1, Row];
 			}
-			Board[0, Column] = newMapPoint;
+			Board[0, Row] = newMapPoint;
 			this.exchangeCard = help;
 		}
 
 
-		public void PullColumn(int Column, Mappoint newMapPoint)
+		public void PullRow(int Row, Mappoint newMapPoint)
 		{
-			Mappoint help = Board[0, Column];
+			Mappoint help = Board[0, Row];
 			for (int i = 0; i < Mapsize - 1; i++)
 			{
-				Board[i, Column] = Board[i + 1, Column];
+				Board[i, Row] = Board[i + 1, Row];
 			}
-			Board[Mapsize - 1, Column] = newMapPoint;
+			Board[Mapsize - 1, Row] = newMapPoint;
 			this.exchangeCard = help;
 		}
 
@@ -119,9 +127,56 @@ namespace DrehenUndGehen
 			{
 				for (int j = 0; j < Mapsize; j++)
 				{
-					Bitmap b = files.randomBitmap();
-					Board[j, i] = new Mappoint(files.randomBitmap(), x);
-					this.openPath(Board[j, i]);
+					if (j == 0 && i % 2 == 0)
+					{
+						if (i == 0)					// Ecke Links Oben
+						{
+							Board[i, j] = new Mappoint(files.rightbottom);
+						}
+						else if (i == Mapsize - 1)			//Ecke Rechts Oben 
+						{
+							Board[i, j] = new Mappoint(files.bottomleft);
+						}
+						else								//Seite Oben
+						{
+							Board[i, j] = new Mappoint(files.rightbottomleft);
+						}
+					}
+					else if (i == 0 && j % 2 == 0)
+					{
+						if (j == Mapsize - 1)			//Ecke Unten Links
+						{
+							Board[i, j] = new Mappoint(files.topright);
+						}
+						else							//Seite Links
+						{
+							Board[i, j] = new Mappoint(files.toprightbottom);
+						}
+					}
+					else if (j == Mapsize - 1 && i % 2 == 0)
+					{
+						if (i == Mapsize - 1)		// Ecke Unten Rechts			
+						{
+							Board[i, j] = new Mappoint(files.lefttop);
+						}
+						else						// Seite Unten
+						{
+							Board[i, j] = new Mappoint(files.lefttopright);
+						}
+					}
+					else if (i == Mapsize -1 && j%2 == 0)		
+					{
+						if (Board[i, j] == null)		// Da die ecken breits gefüllt sind brauchen wir hier nur noch die Seite rechts
+						{
+							Board[i, j] = new Mappoint(files.bottomlefttop);
+						}
+					}
+					else
+					{
+						Board[i, j] = new Mappoint(files.randomBitmap());
+						
+					}
+					this.openPath(Board[i, j]);
 				}
 
 			}
@@ -132,12 +187,12 @@ namespace DrehenUndGehen
          * Wichtig für die spätere Überprüfung welchen Weg die Spielfigur laufen kann. 
          */
 
-        public void openPath(Mappoint point)
+		public void openPath(Mappoint point)
 		{
 			if (point.looks != null)
 			{
-				if (point.looks == files.bottomleft)                   
-				{                                                                     
+				if (point.looks == files.bottomleft)
+				{
 					point.bottom = true;
 					point.left = true;
 				}
@@ -188,14 +243,107 @@ namespace DrehenUndGehen
 				{
 					point.right = true;
 					point.top = true;
-					point.right = true;
+					point.bottom = true;
 				}
 			}
+		}
+
+		/*
+		 * Die Methode dient dazu dem Spieler die Möglichkeit zu geben ,
+		 * die exchangeCard also die Karte die zum verschieben genutzt wird in die passende Position zu drehen.
+         * wird im Doppelclick event der Form aufgerufen.
+		 */ 
+			public void switchPosition(Mappoint point)
+			{
+			if ((point.top == true && point.right == true) && (point.left == false && point.bottom == false))
+			{
+				point.top = false;
+				point.bottom = true;
+				point.looks = files.rightbottom;
+			}
+			else if ((point.right == true && point.bottom == true) && (point.left == false && point.top == false))
+			{
+				point.right = false;
+				point.left = true;
+				point.looks = files.bottomleft;
+			}
+			else if ((point.bottom == true && point.left == true) && (point.top == false && point.right == false))
+			{
+				point.bottom = false;
+				point.top = true;
+				point.looks = files.lefttop;
+			}
+			else if ((point.left == true && point.top == true) && (point.right == false && point.bottom == false))
+			{
+				point.left = false;
+				point.right = true;
+				point.looks = files.topright;
+			}
+			else if ((point.left == true && point.top == true && point.right == true) && (point.bottom == false))
+			{
+				point.left = false;
+				point.bottom = true;
+				point.looks = files.toprightbottom;
+			}
+			else if ((point.top == true && point.right == true && point.bottom == true) && (point.left == false))
+			{
+				point.top = false;
+				point.left = true;
+				point.looks = files.rightbottomleft;
+			}
+			else if ((point.right == true && point.bottom == true && point.left == true) && (point.top == false))
+			{
+				point.right = false;
+				point.top = true;
+				point.looks = files.bottomlefttop;
+			}
+			else if ((point.bottom == true && point.left == true && point.top == true) && (point.right == false))
+			{
+				point.bottom = false;
+				point.right = true;
+				point.looks = files.lefttopright;
+				
+			}
+			else if ((point.left == true && point.right == true) && (point.top == false && point.bottom == false))
+			{
+				point.left= false;
+				point.right = false;
+				point.top = true;
+				point.bottom = true;
+				point.looks = files.topbottom;
+			}
+			else if ((point.top == true && point.bottom == true) && (point.left == false && point.right == false))
+			{
+				point.top = false;
+				point.bottom = false;
+				point.left = true;
+				point.right = true;
+				point.looks = files.leftright;
+			}
+
 
 		}
 
 
+			public void addPropToMap(Map first)
+			{				
+				int indexListe = 0;
+				Random ran = new Random();
+				for (int i = 0; i < first.Mapsize; i++)
+				{
+					for (int j = 0; j < first.Mapsize; j++)
+					{
 
+						if (ran.Next(3) == 1 && indexListe < files.Proplist.Count)
+						{
+							Board[i, j].prop = files.Proplist[indexListe];
+							indexListe += 1;
+						}
+
+					}
+				}
+
+			}
 
 
 
