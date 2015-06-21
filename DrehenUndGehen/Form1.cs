@@ -253,7 +253,7 @@ namespace DrehenUndGehen
             pictureBox1.Image = first.Board[Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)].looks;
 
 
-            listBox1.DataSource = first.getConnectedPaths(new Point(Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)));
+            listBox1.DataSource = first.findPath(new Point(0,0), new Point(Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)));
 			
 		}
 
