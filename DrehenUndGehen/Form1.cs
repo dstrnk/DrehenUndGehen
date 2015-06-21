@@ -22,7 +22,6 @@ namespace DrehenUndGehen
 		int column = -1;
 		int pixeloffset = 0;
 		Gamescreen screen;
-        List<Point> paths;
 
 		public Form1()
 		{
@@ -36,7 +35,6 @@ namespace DrehenUndGehen
 			p = new Point(50, 50);                              
 			s = new Point(50, 50);
 			screen = new Gamescreen(first);
-            paths = new List<Point>();
 			
 		}
 
@@ -244,6 +242,7 @@ namespace DrehenUndGehen
                 return true;
         }
 
+        //Methode zum Testen einiger Funktionen
 		private void Form1_MouseClick(object sender, MouseEventArgs e)
 		{
 			checkBox1.Checked = false;
@@ -271,46 +270,7 @@ namespace DrehenUndGehen
             pictureBox1.Image = first.Board[Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)].looks;
 
 
-
-            listBox1.Items.Clear();
-            paths = new List<Point>();
-
-            if ( paths.Count == 0)
-                paths.Add(new Point(Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)));
-
-            for (int i = 0; i < paths.Count; i++)
-            {
-                if (paths[i].Y != 0 && first.Board[paths[i].X, paths[i].Y].top && first.Board[paths[i].X, paths[i].Y - 1].bottom)
-                {
-                    if (!checkAlreadyInList(new Point(paths[i].X, paths[i].Y - 1), paths))
-                        paths.Add(new Point(paths[i].X, paths[i].Y - 1));
-                }
-
-                if (paths[i].Y != first.Mapsize - 1 && first.Board[paths[i].X, paths[i].Y].bottom && first.Board[paths[i].X, paths[i].Y + 1].top)
-                {
-                    if (!checkAlreadyInList(new Point(paths[i].X, paths[i].Y + 1), paths))
-                        paths.Add(new Point(paths[i].X, paths[i].Y + 1));
-                }
-
-                if (paths[i].X != 0 && first.Board[paths[i].X, paths[i].Y].left && first.Board[paths[i].X - 1, paths[i].Y].right)
-                {
-                    if (!checkAlreadyInList(new Point(paths[i].X -1 , paths[i].Y ), paths))
-                        paths.Add(new Point(paths[i].X - 1, paths[i].Y));
-                }
-
-                if (paths[i].X != first.Mapsize - 1 && first.Board[paths[i].X, paths[i].Y].right && first.Board[paths[i].X + 1, paths[i].Y].left)
-                {
-                    if (!checkAlreadyInList(new Point(paths[i].X + 1, paths[i].Y ), paths))
-                        paths.Add(new Point(paths[i].X + 1, paths[i].Y));
-                }
-            }
-            
-
-
-            for(int i=0; i<paths.Count; i++)
-            {
-                listBox1.Items.Add(paths[i].X + " , " + paths[i].Y);
-            }
+            listBox1.DataSource = first.getConnectedPaths(new Point(Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)));
 			
 		}
 

@@ -325,25 +325,76 @@ namespace DrehenUndGehen
 		}
 
 
-			public void addPropToMap(Map first)
-			{				
-				int indexListe = 0;
-				Random ran = new Random();
-				for (int i = 0; i < first.Mapsize; i++)
+		public void addPropToMap(Map first)
+		{				
+			int indexListe = 0;
+			Random ran = new Random();
+			for (int i = 0; i < first.Mapsize; i++)
+			{
+				for (int j = 0; j < first.Mapsize; j++)
 				{
-					for (int j = 0; j < first.Mapsize; j++)
+
+					if (ran.Next(3) == 1 && indexListe < files.Proplist.Count)
 					{
-
-						if (ran.Next(3) == 1 && indexListe < files.Proplist.Count)
-						{
-							Board[i, j].prop = files.Proplist[indexListe];
-							indexListe += 1;
-						}
-
+						Board[i, j].prop = files.Proplist[indexListe];
+						indexListe += 1;
 					}
-				}
 
+				}
 			}
+
+		}
+
+        //Methode liefert alle Mappoints zurück, die einen Pfad mit der übergebenden Position bilden
+        public List<Point> getConnectedPaths(Point point)
+        {
+            List<Point> paths = new List<Point>();
+
+            paths.Add(new Point(point.X, point.Y));
+
+            for (int i = 0; i < paths.Count; i++)
+            {
+                if (paths[i].Y != 0 && Board[paths[i].X, paths[i].Y].top && Board[paths[i].X, paths[i].Y - 1].bottom && !checkAlreadyInList(new Point(paths[i].X, paths[i].Y - 1), paths) )
+                {
+                    paths.Add(new Point(paths[i].X, paths[i].Y - 1));
+                }
+
+                if (paths[i].Y != Mapsize - 1 && Board[paths[i].X, paths[i].Y].bottom && Board[paths[i].X, paths[i].Y + 1].top && !checkAlreadyInList(new Point(paths[i].X, paths[i].Y + 1), paths) )
+                {
+                    paths.Add(new Point(paths[i].X, paths[i].Y + 1));
+                }
+
+                if (paths[i].X != 0 && Board[paths[i].X, paths[i].Y].left && Board[paths[i].X - 1, paths[i].Y].right && !checkAlreadyInList(new Point(paths[i].X -1 , paths[i].Y ), paths) )
+                {
+                    paths.Add(new Point(paths[i].X - 1, paths[i].Y));
+                }
+
+                if (paths[i].X != Mapsize - 1 && Board[paths[i].X, paths[i].Y].right && Board[paths[i].X + 1, paths[i].Y].left && !checkAlreadyInList(new Point(paths[i].X + 1, paths[i].Y ), paths) )
+                {
+                    paths.Add(new Point(paths[i].X + 1, paths[i].Y));
+                }
+            }
+            
+            return paths;
+        }
+
+        //Methode überprüft ob ein Mappoint schon in der Liste vorhanden ist
+        private bool checkAlreadyInList(Point point, List<Point> paths) 
+        {
+            bool found = false;
+
+            for (int i = 0; i < paths.Count; i++)
+            {
+                if (paths[i] == point)
+                    found = true;
+            }
+
+            if (!found)
+                return false;
+
+            else
+                return true;
+        }
 
 
 
