@@ -225,23 +225,6 @@ namespace DrehenUndGehen
 			Refresh();
 		}
 
-        public bool checkAlreadyInList(Point point, List<Point> paths) 
-        {
-            bool found = false;
-
-            for (int i = 0; i < paths.Count; i++)
-            {
-                if (paths[i] == point)
-                    found = true;
-            }
-
-            if (!found)
-                return false;
-
-            else
-                return true;
-        }
-
         //Methode zum Testen einiger Funktionen
 		private void Form1_MouseClick(object sender, MouseEventArgs e)
 		{
