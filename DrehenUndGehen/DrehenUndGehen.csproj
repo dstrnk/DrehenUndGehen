@@ -46,12 +46,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileManager.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="ChooseYourChar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ChooseYourChar.Designer.cs">
+      <DependentUpon>ChooseYourChar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChooseYourMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChooseYourMap.Designer.cs">
+      <DependentUpon>ChooseYourMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Countdown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Countdown.Designer.cs">
+      <DependentUpon>Countdown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileManager.cs" />
+    <Compile Include="GameLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameLoading.Designer.cs">
+      <DependentUpon>GameLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Start_Screen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Start_Screen.Designer.cs">
+      <DependentUpon>Start_Screen.cs</DependentUpon>
     </Compile>
     <Compile Include="Gamescreen.cs" />
     <Compile Include="Map.cs" />
@@ -59,8 +83,23 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="WhoBegins.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WhoBegins.Designer.cs">
+      <DependentUpon>WhoBegins.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ChooseYourChar.resx">
+      <DependentUpon>ChooseYourChar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChooseYourMap.resx">
+      <DependentUpon>ChooseYourMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Countdown.resx">
+      <DependentUpon>Countdown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameLoading.resx">
+      <DependentUpon>GameLoading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -70,7 +109,14 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Start_Screen.resx">
+      <DependentUpon>Start_Screen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WhoBegins.resx">
+      <DependentUpon>WhoBegins.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -80,6 +126,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Countdown.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\background4.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

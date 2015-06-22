@@ -25,6 +25,7 @@ namespace DrehenUndGehen
 
         public Renderer()
         {
+            
             first   = new Map();          
         }
         public Renderer(Map map ,Graphics g,Gamescreen screen)
