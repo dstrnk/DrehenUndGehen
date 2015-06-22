@@ -378,9 +378,9 @@ namespace DrehenUndGehen
             return paths;
         }
 
-        public List<Point> findPath(Point startPoint, Point endPoint)
+        public List<String> findPath(Point startPoint, Point endPoint)
         {
-            List<Point> navigation = new List<Point>();
+            List<String> navigation = new List<String>();
             List<List<Point>> differentPaths = new List<List<Point>>();
             List<Point> connectedPaths = getConnectedPaths(startPoint);
 
@@ -437,21 +437,40 @@ namespace DrehenUndGehen
             differentPaths = tempLists;
 
             //Der kürzeste Weg wird ermittelt
-            int smallestCount = differentPaths[0].Count;
-            for (int i = 0; i < differentPaths.Count; i++)
+            if (differentPaths.Count != 0)
             {
-                if (differentPaths[i].Count <= smallestCount)
+                List<Point> shortestPath = new List<Point>();
+                int smallestCount = differentPaths[0].Count;
+                for (int i = 0; i < differentPaths.Count; i++)
                 {
-                    smallestCount = differentPaths[i].Count;
-                    navigation = differentPaths[i];
+                    if (differentPaths[i].Count <= smallestCount)
+                    {
+                        smallestCount = differentPaths[i].Count;
+                        shortestPath = differentPaths[i];
+
+                    }
+                }
+
+                for (int i = 0; i < shortestPath.Count - 1; i++ )
+                {
+                    if (shortestPath[i].X > shortestPath[i + 1].X)
+                        navigation.Add("left");
+                    if (shortestPath[i].X < shortestPath[i + 1].X)
+                        navigation.Add("right");
+                    if (shortestPath[i].Y > shortestPath[i + 1].Y)
+                        navigation.Add("up");
+                    if (shortestPath[i].Y < shortestPath[i + 1].Y)
+                        navigation.Add("down");
 
                 }
+                    return navigation;
             }
 
-
-
-
-            return navigation;
+            else
+            {
+                navigation.Add("NO WAY!");
+                return navigation;
+            }
 
         }
 
