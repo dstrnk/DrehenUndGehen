@@ -491,10 +491,5 @@ namespace DrehenUndGehen
             else
                 return true;
         }
-
-
-
-
-
 	}
 }
