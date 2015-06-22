@@ -53,6 +53,7 @@
             this.Controls.Add(this.pbCounter);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Countdown";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Countdown";
             ((System.ComponentModel.ISupportInitialize)(this.pbCounter)).EndInit();
             this.ResumeLayout(false);

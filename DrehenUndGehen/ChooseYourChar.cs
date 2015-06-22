@@ -50,7 +50,7 @@ namespace DrehenUndGehen
 
         public void fillPictureBoxes()
         {
-           
+
             pbChar1.Image = figuren;
             pbChar2.Image = marioandluigi;
             pbChar3.Image = monk;

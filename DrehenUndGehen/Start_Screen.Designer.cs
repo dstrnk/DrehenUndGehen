@@ -62,6 +62,7 @@
             this.Controls.Add(this.btnStarten);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Start_Screen";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Spielname";
             this.Load += new System.EventHandler(this.Start_Screen_Load);
             this.ResumeLayout(false);
