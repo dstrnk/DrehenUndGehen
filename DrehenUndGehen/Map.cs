@@ -436,9 +436,10 @@ namespace DrehenUndGehen
             }
             differentPaths = tempLists;
 
-            //Der kürzeste Weg wird ermittelt
+            //wenn Liste nicht leer ist...
             if (differentPaths.Count != 0)
             {
+                //Der kürzeste Weg wird ermittelt
                 List<Point> shortestPath = new List<Point>();
                 int smallestCount = differentPaths[0].Count;
                 for (int i = 0; i < differentPaths.Count; i++)
@@ -451,6 +452,7 @@ namespace DrehenUndGehen
                     }
                 }
 
+                //Befehlsliste wird erzeugt um weitere Berechnungen zu vereinfachen
                 for (int i = 0; i < shortestPath.Count - 1; i++ )
                 {
                     if (shortestPath[i].X > shortestPath[i + 1].X)
@@ -466,7 +468,7 @@ namespace DrehenUndGehen
                     return navigation;
             }
 
-            else
+            else //wenn die zuvor erzeugte Liste leer war dann ist kein Weg vom Startpunkt zum Endpunkt möglich
             {
                 navigation.Add("NO WAY!");
                 return navigation;
