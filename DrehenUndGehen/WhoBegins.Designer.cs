@@ -28,31 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.btnGameStart = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnPlayer1 = new System.Windows.Forms.Button();
+            this.btnPlayer2 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnGameStart
+            // pictureBox1
             // 
-            this.btnGameStart.Location = new System.Drawing.Point(216, 490);
-            this.btnGameStart.Name = "btnGameStart";
-            this.btnGameStart.Size = new System.Drawing.Size(152, 49);
-            this.btnGameStart.TabIndex = 0;
-            this.btnGameStart.Text = "Spiel Starten";
-            this.btnGameStart.UseVisualStyleBackColor = true;
-            this.btnGameStart.Visible = false;
-            this.btnGameStart.Click += new System.EventHandler(this.btnGameStart_Click);
+            this.pictureBox1.Location = new System.Drawing.Point(-1, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(21, 22);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 172);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(197, 172);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "label2";
+            // 
+            // btnPlayer1
+            // 
+            this.btnPlayer1.Location = new System.Drawing.Point(27, 220);
+            this.btnPlayer1.Name = "btnPlayer1";
+            this.btnPlayer1.Size = new System.Drawing.Size(75, 23);
+            this.btnPlayer1.TabIndex = 3;
+            this.btnPlayer1.Text = "button1";
+            this.btnPlayer1.UseVisualStyleBackColor = true;
+            // 
+            // btnPlayer2
+            // 
+            this.btnPlayer2.Location = new System.Drawing.Point(184, 220);
+            this.btnPlayer2.Name = "btnPlayer2";
+            this.btnPlayer2.Size = new System.Drawing.Size(75, 23);
+            this.btnPlayer2.TabIndex = 4;
+            this.btnPlayer2.Text = "button2";
+            this.btnPlayer2.UseVisualStyleBackColor = true;
             // 
             // WhoBegins
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 562);
-            this.Controls.Add(this.btnGameStart);
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.btnPlayer2);
+            this.Controls.Add(this.btnPlayer1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "WhoBegins";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "WhoBegins";
-            this.Load += new System.EventHandler(this.WhoBegins_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -62,5 +98,10 @@
         #endregion
 
         private System.Windows.Forms.Button btnGameStart;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnPlayer1;
+        private System.Windows.Forms.Button btnPlayer2;
     }
 }
