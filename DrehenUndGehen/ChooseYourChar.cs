@@ -18,7 +18,7 @@ namespace DrehenUndGehen
         Bitmap toad;
         Bitmap bowser;
         Bitmap all;
-
+        
         int playerReady;
 
         Bitmap playerOneUp;
@@ -44,7 +44,7 @@ namespace DrehenUndGehen
             all = new Bitmap("AllCharsAnimated.bmp");
 
             fillPictureBoxes();
-  
+
         }
 
         private void ChooseYourChar_Load(object sender, EventArgs e)

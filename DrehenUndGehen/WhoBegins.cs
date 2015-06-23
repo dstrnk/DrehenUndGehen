@@ -11,18 +11,9 @@ namespace DrehenUndGehen
 {
     public partial class WhoBegins : Form
     {
-        Random random;
-        int number1, number2;
-
-        Boolean playerOne = false;
-        Boolean playerTwo = false;
-
         public WhoBegins()
         {
             InitializeComponent();
-            random = new Random();
-            number1 = 0;
-            number2 = 0;
         }
 
         private void WhoBegins_Load(object sender, EventArgs e)
@@ -32,6 +23,18 @@ namespace DrehenUndGehen
 
         private void btnGameStart_Click(object sender, EventArgs e)
         {
+            timer1.Enabled = true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            i++;
+            if (i == 12)
+                i = 0;
+            timer1.Interval = timer1.Interval - Convert.ToInt32(timer1.Interval / 10);
+            if (timer1.Interval == 10)
+            {
+                timer1.Enabled = false;
             this.Visible = false;
             Countdown count = new Countdown();
             count.ShowDialog();
@@ -40,49 +43,6 @@ namespace DrehenUndGehen
             game.Show();
 
             this.Close();
-        }
-
-        private void btnPlayer1_Click(object sender, EventArgs e)
-        {
-            number1 = random.Next(1, 6);
-            label1.Text = number1.ToString();
-            btnPlayer2.Enabled = true;
-            btnPlayer1.Enabled = false;
-        }
-
-        private void btnPlayer2_Click(object sender, EventArgs e)
-        {
-            number2 = random.Next(1, 6);
-            label2.Text = number2.ToString();
-            btnPlayer2.Enabled = false;
-
-            if(number1 > number2)
-            {
-                playerOne = true;
-            }
-            else if(number2>number1)
-            {
-                playerTwo = true;
-            }
-            else if(number2 == number1)
-            {
-                int masterNumber = random.Next(1, 2);
-                if(masterNumber == 1)
-                {
-                     MessageBox.Show("Nun entscheidet das Glückslos wer beginnen darf : Player 1 beginnt");
-                     playerOne = true;
-                }
-                else
-                {
-                    MessageBox.Show("Nun entscheidet das Glückslos wer beginnen darf : Player 2 beginnt");
-                    playerTwo = true;
-                }
-                
-                
-            }
-
-
-            btnGameStart.Visible = true;
         }
     }
 }

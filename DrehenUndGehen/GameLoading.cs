@@ -230,7 +230,7 @@ namespace DrehenUndGehen
         //Methode zum Testen einiger Funktionen
 		private void Form1_MouseClick(object sender, MouseEventArgs e)
 		{
-			checkBox1.Checked = false;
+			/*checkBox1.Checked = false;
 			checkBox2.Checked = false;
 			checkBox3.Checked = false;
 			checkBox4.Checked = false;
@@ -256,7 +256,7 @@ namespace DrehenUndGehen
 
 
             listBox1.DataSource = first.findPath(new Point(0,0), new Point(Convert.ToInt32((e.X - screen.MapPosition.X) / first.MapPointSize), Convert.ToInt32((e.Y - screen.MapPosition.Y) / first.MapPointSize)));
-			
+			*/
 		}
 
 	
